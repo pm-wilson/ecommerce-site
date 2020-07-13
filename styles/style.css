@@ -1,0 +1,14 @@
+body {
+  --color1: hsla(349, 69%, 76%, 1);
+  --color2: hsla(207, 67%, 44%, 1);
+  --color3: hsla(200, 61%, 56%, 1);
+  --color4: hsla(187, 41%, 94%, 1);
+  --color5: hsla(170, 28%, 95%, 1);
+
+  --header-height: 80px;
+  --shadow: 0px 10px 20px -12px rgba(0, 0, 0, 0.45);
+  --footer-height: 25px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color2);
+}
