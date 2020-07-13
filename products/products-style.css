@@ -1,0 +1,59 @@
+main {
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#cart {
+  margin: 25px;
+  width: 50px;
+  height: 50px;
+  background-image: url("cart-photos/cart-empty.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-count {
+  color: var(--color2);
+  font-weight: bold;
+}
+
+.product-list-area {
+  margin: 25px;
+}
+
+.car-inventory-item {
+  margin: 25px;
+  padding: 10px;
+  border: solid 5px var(--color1);
+  border-radius: 5px;
+  background-color: var(--color5);
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+.car-inventory-price {
+  margin-top: 10px;
+  font-weight: bold;
+  color: red;
+}
+
+.car-inventory-image {
+  border: solid 3px var(--color4);
+  border-radius: 3px;
+  width: 85%;
+  height: 150px;
+  margin: 10px;
+}
+
+.car-inventory-description {
+  width: 200px;
+  margin: 10px;
+}
