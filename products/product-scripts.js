@@ -10,6 +10,7 @@ function buildProducts() {
 
         listArea.append(elementToBuild);
     }
+
 }
 
 buildProducts();

@@ -1,11 +1,11 @@
 /* add home page styles here */
 
 body {
-  --color1: hsla(184, 89%, 77%, 1);
-  --color2: hsla(203, 62%, 98%, 1);
-  --color3: hsla(273, 5%, 96%, 1);
-  --color4: hsla(170, 21%, 11%, 1);
-  --color5: hsla(236, 65%, 97%, 1);
+  --color1: #2a0e0d;
+  --color2: #cbb546;
+  --color3: #be0002;
+  --color4: #6a0002;
+  --color5: #bdc4ce;
 
   --header-height: 80px;
   --shadow: 0px 10px 20px -12px var(--color1);
@@ -36,13 +36,13 @@ h2 {
   font-size: 20px;
 }
 
-a {
-  text-decoration: underline;
-  color: blue;
+button {
   cursor: pointer;
 }
 
-button {
+a {
+  text-decoration: underline;
+  color: blue;
   cursor: pointer;
 }
 
