@@ -9,12 +9,12 @@ main {
   align-items: center;
 }
 
-ul {
-  margin: 20px;
-}
-
 p {
   padding: 20px;
+}
+
+ul {
+  margin: 20px;
 }
 
 .products-area {

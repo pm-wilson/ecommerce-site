@@ -9,6 +9,7 @@ function buildProducts() {
 
         listArea.append(buildInventoryElement(currentItem));
     }
+
 }
 
 buildProducts();
