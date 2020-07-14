@@ -17,6 +17,8 @@ body {
 }
 
 header {
+  position: fixed;
+  top: 0px;
   height: 100px;
   width: 100%;
   text-align: center;
@@ -45,6 +47,8 @@ button {
 }
 
 footer {
+  position: fixed;
+  bottom: 0px;
   background-color: var(--color5);
   height: 25px;
   width: 100%;
@@ -53,8 +57,4 @@ footer {
   justify-content: space-evenly;
   align-items: center;
   box-shadow: var(--shadow);
-}
-
-border {
-  border: solid 1px red;
 }
