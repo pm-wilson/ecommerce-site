@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../styles/reset.css" />
+    <link rel="stylesheet" href="./cart-style.css" />
+    <link rel="stylesheet" href="../styles/home.css" />
+    <title>Borrowed Car Emporium</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Borrowed Car Emporium</h1>
+      <h2>Shopping Cart</h2>
+    </header>
+    <main>
+      <table id="shopping-cart-area">
+        <tr class="table-header-area">
+          <th class="table-header-name">Car</th>
+          <th class="table-header-quantity-down"></th>
+          <th class="table-header-quantity">Quantity</th>
+          <th class="table-header-quantity-up"></th>
+          <th class="table-header-price">Price</th>
+          <th class="table-header-total">Total</th>
+          <th class="table-header-button"></th>
+        </tr>
+        <tr class="table-row-cart">
+          <td class="table-row-name">Acura NSX</td>
+          <td class="table-row-quantity-down">
+            <button id="cart-button-down-acura-nsx" class="cart-button-down">
+              -
+            </button>
+          </td>
+          <td class="table-row-quantity">5</td>
+          <td class="table-row-quantity-up">
+            <button id="cart-button-down-acura-nsx" class="cart-button-up">
+              +
+            </button>
+          </td>
+          <td class="table-row-price">$500.00</td>
+          <td class="table-row-total">$2500.00</td>
+          <td class="table-row-button">
+            <button
+              id="cart-button-remove-acura-nsx"
+              class="cart-button-remove"
+            >
+              Remove
+            </button>
+          </td>
+        </tr>
+      </table>
+    </main>
+    <footer>
+      <div><a href="./index.html" class="home">home</a></div>
+      <div><span class="careers">Careers</span></div>
+      <div><span class="contact">Contact Us</span></div>
+      <div><a class="admin" href="./admin/admin.html">Admin Login</a></div>
+      <div class="copy gutter-right">&copy; 2020 Wilson Empire</div>
+    </footer>
+
+    <script type="module" src="cart-scripts.js"></script>
+  </body>
+</html>

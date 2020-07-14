@@ -1,4 +1,4 @@
-const productInventory = [
+export const productInventory = [
     {
         id: 'acura-nsx',
         name: 'Acura NSX',

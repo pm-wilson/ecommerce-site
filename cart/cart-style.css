@@ -1,0 +1,13 @@
+#shopping-cart-area {
+  margin: 120px 20px 100px 20px;
+  max-height: 80%;
+  border: solid var(--color1) 2px;
+  color: black;
+}
+
+td,
+th {
+  text-align: center;
+  border: solid var(--color5) 2px;
+  padding: 5px;
+}
