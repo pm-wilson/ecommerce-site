@@ -84,11 +84,7 @@ export function buildInventoryElement(item) {
     addButton.textContent = "Add";
     addButton.value = item.id;
 
-    containerDiv.append(h4Name);
-    containerDiv.append(h5Price);
-    containerDiv.append(pDescription);
-    containerDiv.append(imgPicture);
-    containerDiv.append(addButton);
+    containerDiv.append(h4Name, h5Price, pDescription, imgPicture,addButton);
 
     return containerDiv;
 }
