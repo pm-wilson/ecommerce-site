@@ -1,4 +1,4 @@
-import productInventory from "./product-inventory.js";
+import { productInventory } from "./product-inventory.js";
 import { buildInventoryElement } from "./product-inventory.js";
 
 function buildProducts() {

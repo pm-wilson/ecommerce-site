@@ -1,4 +1,1 @@
-import { cartData, buildCartRow } from "./cartUtils.js";
-
-
-console.log(cartData)
+console.log("run cart page code here")

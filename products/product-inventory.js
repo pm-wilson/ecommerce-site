@@ -88,5 +88,3 @@ export function buildInventoryElement(item) {
 
     return containerDiv;
 }
-
-export default productInventory;
