@@ -1,3 +1,6 @@
+import { cart } from "./constants.js";
+
+/*
 export const cartData = [
     { id: 'acura-nsx', quantity: 5 },
     { id: 'ferrari-f8', quantity: 59 },
@@ -5,7 +8,7 @@ export const cartData = [
     { id: 'rolls-royce-phantom', quantity: 11 },
     { id: 'ford-pinto', quantity: 1 }
 ];
-
+*/
 export function getObjectWithIdFromArray(productId, arrayOfItems) {
     if (arrayOfItems.length > 0) {
         for (var i = 0; i < arrayOfItems.length; i++) {
@@ -34,7 +37,8 @@ export function calcLineItem(price, quantity) {
 }
 
 export function buildCartRow(cartObjectId, productItemArray) {
-    const cartRow = document.createElement("tr"),
+    const cartData = getCart(),
+        cartRow = document.createElement("tr"),
         cartName = document.createElement("td"),
         cartQuantityDown = document.createElement("td"),
         cartQuantityDownButton = document.createElement("button"),
@@ -86,6 +90,25 @@ export function buildCartRow(cartObjectId, productItemArray) {
     return cartRow;
 }
 
+export function buildCartTotalRow(totalAmount) {
+    const cartRow = document.createElement("tr"),
+        cartName = document.createElement("td"),
+        cartQuantityDown = document.createElement("td"),
+        cartQuantity = document.createElement("td"),
+        cartQuantityUp = document.createElement("td"),
+        cartPrice = document.createElement("td"),
+        cartTotal = document.createElement("td"),
+        cartRemove = document.createElement("td");
+
+    cartRow.classList.add("cart-total-row");
+    cartPrice.innerHTML = "Total:";
+    cartTotal.innerHTML = totalAmount || 0;
+
+    cartRow.append(cartName, cartQuantityDown, cartQuantity, cartQuantityUp, cartPrice, cartTotal, cartRemove);
+
+    return cartRow;
+}
+
 export function cartTotalAmount(cartItemArray, productItemArray) {
     let total = 0,
         printTotal = "";
@@ -103,7 +126,6 @@ export function cartTotalAmount(cartItemArray, productItemArray) {
 
     return printTotal;
 }
-
 
 export function buildInventoryElement(item) {
     const containerDiv = document.createElement("div"),
@@ -130,8 +152,57 @@ export function buildInventoryElement(item) {
     addButton.classList.add("car-inventory-add-button");
     addButton.textContent = "Add";
     addButton.value = item.id;
+    addButton.addEventListener("click", () => {
+        addItemToCart(item.id);
+    })
 
     containerDiv.append(h4Name, h5Price, pDescription, imgPicture, addButton);
 
     return containerDiv;
+}
+
+export function saveCart(arrayOfObjectsToSave) {
+    const stringyObject = JSON.stringify(arrayOfObjectsToSave);
+
+    localStorage.setItem(cart, stringyObject);
+}
+
+export function getCart() {
+    const stringyLocalStorage = localStorage.getItem(cart),
+        cartArray = JSON.parse(stringyLocalStorage) || [];
+
+    return cartArray;
+}
+
+export function getCartTotalItems() {
+    const cart = getCart();
+    let cartCount = 0;
+
+    for (var i = 0; i < cart.length; i++) {
+        const currentCartItem = cart[i];
+
+        cartCount += currentCartItem.quantity;
+    }
+
+    return cartCount;
+}
+
+export function clearCart() {
+    localStorage.clear();
+}
+
+export function addItemToCart(itemId) {
+    const cartArray = getCart(),
+        itemInCart = getObjectWithIdFromArray(itemId, cartArray);
+
+    if (itemInCart) {
+        //increase quantity
+        itemInCart.quantity++;
+
+    } else {
+        //make first cart item
+        cartArray.push({ id: itemId, quantity: 1 });
+    }
+
+    saveCart(cartArray);
 }
