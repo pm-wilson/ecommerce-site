@@ -89,3 +89,21 @@ export function buildCartRow(cartObjectId, productItemArray) {
 
     return cartRow;
 }
+
+export function cartTotalAmount(cartItemArray, productItemArray) {
+    let total = 0,
+        printTotal = "";
+
+    for (var i = 0; i < cartItemArray.length; i++) {
+        const currentCartItem = cartItemArray[i],
+            currentProductItem = getObjectWithIdFromArray(currentCartItem.id, productItemArray),
+            cartItemQuantity = currentCartItem.quantity,
+            productItemPrice = currentProductItem.price,
+            currentTotalPrice = cartItemQuantity * productItemPrice;
+
+        total += currentTotalPrice;
+        printTotal = convertNumberToPrice(total)
+    }
+
+    return printTotal;
+}
