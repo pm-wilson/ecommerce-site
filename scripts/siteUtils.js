@@ -1,14 +1,6 @@
 import { cart } from "./constants.js";
+import { buildCart } from "./cart-scripts.js";
 
-/*
-export const cartData = [
-    { id: 'acura-nsx', quantity: 5 },
-    { id: 'ferrari-f8', quantity: 59 },
-    { id: 'lamborghini-huracan-evo', quantity: 2 },
-    { id: 'rolls-royce-phantom', quantity: 11 },
-    { id: 'ford-pinto', quantity: 1 }
-];
-*/
 export function getObjectWithIdFromArray(productId, arrayOfItems) {
     if (arrayOfItems.length > 0) {
         for (var i = 0; i < arrayOfItems.length; i++) {
@@ -98,22 +90,48 @@ export function buildCartTotalRow(totalAmount) {
         cartQuantityUp = document.createElement("td"),
         cartPrice = document.createElement("td"),
         cartTotal = document.createElement("td"),
-        cartRemove = document.createElement("td");
+        cartRemove = document.createElement("td"),
+        clearButton = document.createElement("button");
 
     cartRow.classList.add("cart-total-row");
     cartPrice.innerHTML = "Total:";
-    cartTotal.innerHTML = totalAmount || 0;
+    cartTotal.innerHTML = totalAmount || "$0.00";
+
+    if (isAmountBiggerThanZero(totalAmount)) {
+        clearButton.innerHTML = "Clear Cart";
+        clearButton.addEventListener("click", () => {
+            clearCart();
+            location.reload();
+        });
+        cartRemove.append(clearButton);
+    }
 
     cartRow.append(cartName, cartQuantityDown, cartQuantity, cartQuantityUp, cartPrice, cartTotal, cartRemove);
 
     return cartRow;
 }
 
+function isAmountBiggerThanZero(amount) {
+    const splitString = amount.split("");
+    let newString = "";
+
+    for (let i = 1; i < splitString.length; i++) {
+        const currentDigit = splitString[i];
+
+        newString += currentDigit;
+    }
+    newString = Number(newString);
+    if (newString > 0) {
+        return true;
+    }
+    return false;
+}
+
 export function cartTotalAmount(cartItemArray, productItemArray) {
     let total = 0,
         printTotal = "";
 
-    for (var i = 0; i < cartItemArray.length; i++) {
+    for (let i = 0; i < cartItemArray.length; i++) {
         const currentCartItem = cartItemArray[i],
             currentProductItem = getObjectWithIdFromArray(currentCartItem.id, productItemArray),
             cartItemQuantity = currentCartItem.quantity,
@@ -152,9 +170,7 @@ export function buildInventoryElement(item) {
     addButton.classList.add("car-inventory-add-button");
     addButton.textContent = "Add";
     addButton.value = item.id;
-    addButton.addEventListener("click", () => {
-        addItemToCart(item.id);
-    })
+    addButton.addEventListener("click", () => addItemToCart(item.id));
 
     containerDiv.append(h4Name, h5Price, pDescription, imgPicture, addButton);
 
@@ -189,6 +205,7 @@ export function getCartTotalItems() {
 
 export function clearCart() {
     localStorage.clear();
+    buildCart();
 }
 
 export function addItemToCart(itemId) {
@@ -205,4 +222,14 @@ export function addItemToCart(itemId) {
     }
 
     saveCart(cartArray);
+    updateCartTotal();
+}
+
+export function updateCartTotal() {
+    const cartTotalLocation = document.querySelector("#cart"),
+        totalCartItems = getCartTotalItems();
+
+    if (cartTotalLocation) {
+        cartTotalLocation.innerHTML = totalCartItems;
+    }
 }
