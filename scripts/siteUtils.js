@@ -1,7 +1,3 @@
-import { productInventory } from "../products/product-inventory.js";
-
-//const cartData = [];
-
 export const cartData = [
     { id: 'acura-nsx', quantity: 5 },
     { id: 'ferrari-f8', quantity: 59 },
@@ -106,4 +102,36 @@ export function cartTotalAmount(cartItemArray, productItemArray) {
     }
 
     return printTotal;
+}
+
+
+export function buildInventoryElement(item) {
+    const containerDiv = document.createElement("div"),
+        h4Name = document.createElement("h4"),
+        h5Price = document.createElement("h5"),
+        pDescription = document.createElement("p"),
+        imgPicture = document.createElement("img"),
+        addButton = document.createElement("button");
+
+    containerDiv.classList.add("car-inventory-item");
+
+    h4Name.classList.add("car-inventory-name");
+    h4Name.textContent = item.name;
+
+    h5Price.classList.add("car-inventory-price");
+    h5Price.textContent = "$" + item.price.toFixed(2);
+
+    pDescription.classList.add("car-inventory-description");
+    pDescription.textContent = item.description;
+
+    imgPicture.classList.add("car-inventory-image");
+    imgPicture.src = item.image;
+
+    addButton.classList.add("car-inventory-add-button");
+    addButton.textContent = "Add";
+    addButton.value = item.id;
+
+    containerDiv.append(h4Name, h5Price, pDescription, imgPicture, addButton);
+
+    return containerDiv;
 }

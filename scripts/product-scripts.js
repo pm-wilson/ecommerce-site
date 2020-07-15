@@ -1,5 +1,5 @@
 import { productInventory } from "./product-inventory.js";
-import { buildInventoryElement } from "./product-inventory.js";
+import { buildInventoryElement } from "./siteUtils.js";
 
 function buildProducts() {
     const listArea = document.querySelector("#product-list");

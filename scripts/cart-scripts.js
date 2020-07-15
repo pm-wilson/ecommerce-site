@@ -1,5 +1,5 @@
-import { buildCartRow, cartData, cartTotalAmount } from "./cartUtils.js";
-import { productInventory } from "../products/product-inventory.js";
+import { buildCartRow, cartData, cartTotalAmount } from "./siteUtils.js";
+import { productInventory } from "./product-inventory.js";
 
 function buildCart() {
     const cartArea = document.querySelector("#shopping-cart-area"),
