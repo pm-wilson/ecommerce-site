@@ -29,7 +29,6 @@ export function convertNumberToPrice(number) {
         textAmount = "$" + amount.toFixed(2);
 
     return textAmount;
-    //not working
 }
 
 export function calcLineItem(price, quantity) {
