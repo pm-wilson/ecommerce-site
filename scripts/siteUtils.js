@@ -35,6 +35,7 @@ export function buildCartRow(cartObjectId, productItemArray) {
         cartQuantityDown = document.createElement("td"),
         cartQuantityDownButton = document.createElement("button"),
         cartQuantity = document.createElement("td"),
+        cartQuantityUpCount = document.createElement("input"),
         cartQuantityUp = document.createElement("td"),
         cartQuantityUpButton = document.createElement("button"),
         cartPrice = document.createElement("td"),
@@ -63,11 +64,24 @@ export function buildCartRow(cartObjectId, productItemArray) {
     cartQuantity.innerHTML = cartObject.quantity;
 
     cartQuantityUp.classList.add("table-row-quantity-up");
+
+    cartQuantityUpCount.id = "quantity-up-count-" + cartObjectId;
+    cartQuantityUpCount.classList.add("quantity-up-count");
+    cartQuantityUpCount.type = "number";
+    cartQuantityUpCount.min = 1;
+    cartQuantityUpCount.value = 1;
+
     cartQuantityUpButton.id = "cart-button-up-" + cartObjectId;
     cartQuantityUpButton.classList.add("cart-button-up");
     cartQuantityUpButton.innerHTML = "+";
     cartQuantityUpButton.addEventListener("click", () => {
-        addItemToCart(cartObjectId);
+        const amountToIncreaseArea = document.querySelector("#quantity-up-count-" + cartObjectId),
+            amountToIncrease = Number(amountToIncreaseArea.value);
+
+        debugger
+        for (var i = 0; i < amountToIncrease; i++) {
+            addItemToCart(cartObjectId);
+        }
         location.reload();
     });
 
@@ -87,7 +101,7 @@ export function buildCartRow(cartObjectId, productItemArray) {
     });
 
     cartQuantityDown.append(cartQuantityDownButton);
-    cartQuantityUp.append(cartQuantityUpButton);
+    cartQuantityUp.append(cartQuantityUpCount, cartQuantityUpButton);
     cartRemove.append(cartRemoveButton);
     cartRow.append(cartName, cartQuantityDown, cartQuantity, cartQuantityUp, cartPrice, cartTotal, cartRemove);
 
@@ -108,7 +122,7 @@ function removeIdFromCart(cartObjectId) {
     saveCart(newArray);
 }
 
-export function subtractCartQuantity(itemId) {
+function subtractCartQuantity(itemId) {
     const cartArray = getCart(),
         itemInCart = getObjectWithIdFromArray(itemId, cartArray),
         itemQuantity = itemInCart.quantity;
@@ -122,7 +136,7 @@ export function subtractCartQuantity(itemId) {
     updateCartTotal();
 }
 
-export function buildCartTotalRow(totalAmount) {
+function buildCartTotalRow(totalAmount) {
     const cartRow = document.createElement("tr"),
         cartName = document.createElement("td"),
         cartQuantityDown = document.createElement("td"),
@@ -167,7 +181,7 @@ function isAmountBiggerThanZero(amount) {
     return false;
 }
 
-export function cartTotalAmount(cartItemArray, productItemArray) {
+function cartTotalAmount(cartItemArray, productItemArray) {
     let total = 0,
         printTotal = "";
 
@@ -185,7 +199,7 @@ export function cartTotalAmount(cartItemArray, productItemArray) {
     return printTotal;
 }
 
-export function buildInventoryElement(item) {
+function buildInventoryElement(item) {
     const containerDiv = document.createElement("div"),
         h4Name = document.createElement("h4"),
         h5Price = document.createElement("h5"),
@@ -217,20 +231,20 @@ export function buildInventoryElement(item) {
     return containerDiv;
 }
 
-export function saveCart(arrayOfObjectsToSave) {
+function saveCart(arrayOfObjectsToSave) {
     const stringyObject = JSON.stringify(arrayOfObjectsToSave);
 
     localStorage.setItem(cart, stringyObject);
 }
 
-export function getCart() {
+function getCart() {
     const stringyLocalStorage = localStorage.getItem(cart),
         cartArray = JSON.parse(stringyLocalStorage) || [];
 
     return cartArray;
 }
 
-export function getCartTotalItems() {
+function getCartTotalItems() {
     const cart = getCart();
     let cartCount = 0;
 
@@ -243,12 +257,12 @@ export function getCartTotalItems() {
     return cartCount;
 }
 
-export function clearCart() {
+function clearCart() {
     localStorage.clear();
     buildCart();
 }
 
-export function addItemToCart(itemId) {
+function addItemToCart(itemId) {
     const cartArray = getCart(),
         itemInCart = getObjectWithIdFromArray(itemId, cartArray);
 
@@ -286,7 +300,8 @@ export function buildProducts() {
 export function buildCart() {
     const cartArea = document.querySelector("#shopping-cart-area"),
         cartData = getCart(),
-        totalAmount = cartTotalAmount(cartData, productInventory);
+        totalAmount = cartTotalAmount(cartData, productInventory),
+        checkoutButton = document.querySelector("#checkout-button");
 
     for (let i = 0; i < cartData.length; i++) {
         const currentCartItem = cartData[i],
@@ -294,6 +309,31 @@ export function buildCart() {
 
         cartArea.append(currentCartRow);
     }
-
     cartArea.append(buildCartTotalRow(totalAmount));
+    if (cartData.length === 0) {
+        checkoutButton.disabled = true;
+    } else {
+        checkoutButton.disabled = false;
+    }
+}
+
+export function checkoutCart() {
+    const cart = getCart();
+    let cartText = "Checking out the ";
+
+    for (var i = 0; i < cart.length; i++) {
+        const currentCartItem = cart[i],
+            currentInventoryItem = getObjectWithIdFromArray(currentCartItem.id, productInventory);
+
+        cartText += currentInventoryItem.name + " with Quantity (" + currentCartItem.quantity + ")";
+        if (i !== cart.length - 1) {
+            cartText += ", ";
+        }
+    }
+
+    alert(cartText);
+    clearCart();
+    buildCart();
+    updateCartTotal();
+    location.reload();
 }

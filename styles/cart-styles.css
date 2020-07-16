@@ -15,3 +15,7 @@ th {
 .cart-total-row {
   color: var(--color1);
 }
+
+.quantity-up-count {
+  width: 50px;
+}
