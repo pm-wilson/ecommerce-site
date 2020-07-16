@@ -75,14 +75,7 @@ export function buildCartRow(cartObjectId, productItemArray) {
     cartQuantityUpButton.classList.add("cart-button-up");
     cartQuantityUpButton.innerHTML = "+";
     cartQuantityUpButton.addEventListener("click", () => {
-        const amountToIncreaseArea = document.querySelector("#quantity-up-count-" + cartObjectId),
-            amountToIncrease = Number(amountToIncreaseArea.value);
-
-        debugger
-        for (var i = 0; i < amountToIncrease; i++) {
-            addItemToCart(cartObjectId);
-        }
-        location.reload();
+        increaseCartForAmount(cartObjectId);
     });
 
     cartPrice.classList.add("table-row-price");
@@ -106,6 +99,16 @@ export function buildCartRow(cartObjectId, productItemArray) {
     cartRow.append(cartName, cartQuantityDown, cartQuantity, cartQuantityUp, cartPrice, cartTotal, cartRemove);
 
     return cartRow;
+}
+
+function increaseCartForAmount(cartObjectId) {
+    const amountToIncreaseArea = document.querySelector("#quantity-up-count-" + cartObjectId),
+        amountToIncrease = Number(amountToIncreaseArea.value);
+
+    for (var i = 0; i < amountToIncrease; i++) {
+        addItemToCart(cartObjectId);
+    }
+    location.reload();
 }
 
 function removeIdFromCart(cartObjectId) {
@@ -275,6 +278,7 @@ function addItemToCart(itemId) {
 
     saveCart(cartArray);
     updateCartTotal();
+    animateCartLogo();
 }
 
 export function updateCartTotal() {
@@ -336,4 +340,15 @@ export function checkoutCart() {
     buildCart();
     updateCartTotal();
     location.reload();
+}
+
+function animateCartLogo() {
+    const cartLogo = document.querySelector("#cart");
+
+    if (cartLogo) {
+        cartLogo.classList.add("animate-cart");
+
+        setTimeout(() => cartLogo.classList.remove("animate-cart"), 1000);
+
+    }
 }
