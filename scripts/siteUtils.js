@@ -202,13 +202,14 @@ function cartTotalAmount(cartItemArray, productItemArray) {
     return printTotal;
 }
 
-function buildInventoryElement(item) {
+export function buildInventoryElement(item) {
     const containerDiv = document.createElement("div"),
         h4Name = document.createElement("h4"),
         h5Price = document.createElement("h5"),
         pDescription = document.createElement("p"),
         imgPicture = document.createElement("img"),
-        addButton = document.createElement("button");
+        addButton = document.createElement("button"),
+        quantityIncreaseDropdown = document.createElement("select");
 
     containerDiv.classList.add("car-inventory-item");
 
@@ -224,12 +225,24 @@ function buildInventoryElement(item) {
     imgPicture.classList.add("car-inventory-image");
     imgPicture.src = item.image;
 
+    quantityIncreaseDropdown.classList.add("quantity-increase-dropdown");
+    quantityIncreaseDropdown.id = "quantity-increase-" + item.id;
+    quantityIncreaseDropdown.value = 1;
+    quantityIncreaseDropdown.name = "select";
+    for (let i = 1; i < 10; i++) {
+        const selectOption = document.createElement("option");
+        selectOption.innerHTML = i;
+        selectOption.value = i;
+
+        quantityIncreaseDropdown.append(selectOption);
+    }
+
     addButton.classList.add("car-inventory-add-button");
     addButton.textContent = "Add";
     addButton.value = item.id;
-    addButton.addEventListener("click", () => addItemToCart(item.id));
+    addButton.addEventListener("click", () => addItemToCart(item.id, quantityIncreaseDropdown.value));
 
-    containerDiv.append(h4Name, h5Price, pDescription, imgPicture, addButton);
+    containerDiv.append(h4Name, h5Price, pDescription, imgPicture, quantityIncreaseDropdown, addButton);
 
     return containerDiv;
 }
@@ -265,15 +278,16 @@ function clearCart() {
     buildCart();
 }
 
-function addItemToCart(itemId) {
+function addItemToCart(itemId, q) {
     const cartArray = getCart(),
-        itemInCart = getObjectWithIdFromArray(itemId, cartArray);
+        itemInCart = getObjectWithIdFromArray(itemId, cartArray),
+        quantityToUpdate = Number(q);
 
     if (itemInCart) {
-        itemInCart.quantity++;
+        itemInCart.quantity += quantityToUpdate;
 
     } else {
-        cartArray.push({ id: itemId, quantity: 1 });
+        cartArray.push({ id: itemId, quantity: quantityToUpdate });
     }
 
     saveCart(cartArray);

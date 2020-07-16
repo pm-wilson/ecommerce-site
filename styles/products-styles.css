@@ -40,3 +40,7 @@ main {
   width: 200px;
   margin: 10px;
 }
+
+.quantity-increase-dropdown {
+  width: 40px;
+}

@@ -2,3 +2,12 @@ section {
   color: var(--color5);
   padding: 200px;
 }
+
+form {
+  margin: 150px;
+  color: var(--color5);
+}
+
+span {
+  display: block;
+}
