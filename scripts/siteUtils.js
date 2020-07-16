@@ -1,5 +1,5 @@
 import { cart } from "./constants.js";
-import { buildCart } from "./cart-scripts.js";
+import { productInventory } from "./product-inventory.js";
 
 export function getObjectWithIdFromArray(productId, arrayOfItems) {
     if (arrayOfItems.length > 0) {
@@ -270,4 +270,30 @@ export function updateCartTotal() {
     if (cartTotalLocation) {
         cartTotalLocation.innerHTML = totalCartItems;
     }
+}
+
+export function buildProducts() {
+    const listArea = document.querySelector("#product-list");
+
+    for (var i = 0; i < productInventory.length; i++) {
+        const currentItem = productInventory[i],
+            currentBuiltItem = buildInventoryElement(currentItem);
+
+        listArea.append(currentBuiltItem);
+    }
+}
+
+export function buildCart() {
+    const cartArea = document.querySelector("#shopping-cart-area"),
+        cartData = getCart(),
+        totalAmount = cartTotalAmount(cartData, productInventory);
+
+    for (let i = 0; i < cartData.length; i++) {
+        const currentCartItem = cartData[i],
+            currentCartRow = buildCartRow(currentCartItem.id, productInventory);
+
+        cartArea.append(currentCartRow);
+    }
+
+    cartArea.append(buildCartTotalRow(totalAmount));
 }
