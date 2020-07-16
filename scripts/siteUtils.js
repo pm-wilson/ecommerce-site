@@ -54,6 +54,10 @@ export function buildCartRow(cartObjectId, productItemArray) {
     cartQuantityDownButton.id = "cart-button-down-" + cartObjectId;
     cartQuantityDownButton.classList.add("cart-button-down");
     cartQuantityDownButton.innerHTML = "-";
+    cartQuantityDownButton.addEventListener("click", () => {
+        subtractCartQuantity(cartObjectId);
+        location.reload();
+    });
 
     cartQuantity.classList.add("table-row-quantity");
     cartQuantity.innerHTML = cartObject.quantity;
@@ -62,6 +66,10 @@ export function buildCartRow(cartObjectId, productItemArray) {
     cartQuantityUpButton.id = "cart-button-up-" + cartObjectId;
     cartQuantityUpButton.classList.add("cart-button-up");
     cartQuantityUpButton.innerHTML = "+";
+    cartQuantityUpButton.addEventListener("click", () => {
+        addItemToCart(cartObjectId);
+        location.reload();
+    });
 
     cartPrice.classList.add("table-row-price");
     cartPrice.innerHTML = convertNumberToPrice(productObject.price);
@@ -73,6 +81,10 @@ export function buildCartRow(cartObjectId, productItemArray) {
     cartRemoveButton.id = "cart-button-remove-" + cartObjectId;
     cartRemoveButton.classList.add("cart-button-remove");
     cartRemoveButton.innerHTML = "Remove";
+    cartRemoveButton.addEventListener("click", () => {
+        removeIdFromCart(cartObjectId);
+        location.reload();
+    });
 
     cartQuantityDown.append(cartQuantityDownButton);
     cartQuantityUp.append(cartQuantityUpButton);
@@ -80,6 +92,34 @@ export function buildCartRow(cartObjectId, productItemArray) {
     cartRow.append(cartName, cartQuantityDown, cartQuantity, cartQuantityUp, cartPrice, cartTotal, cartRemove);
 
     return cartRow;
+}
+
+function removeIdFromCart(cartObjectId) {
+    const cart = getCart(),
+        newArray = [];
+
+    for (let i = 0; i < cart.length; i++) {
+        const currentArrayItem = cart[i];
+
+        if (cartObjectId !== currentArrayItem.id) {
+            newArray.push(currentArrayItem);
+        }
+    }
+    saveCart(newArray);
+}
+
+export function subtractCartQuantity(itemId) {
+    const cartArray = getCart(),
+        itemInCart = getObjectWithIdFromArray(itemId, cartArray),
+        itemQuantity = itemInCart.quantity;
+
+    if (itemQuantity === 1) {
+        removeIdFromCart(itemId);
+    } else {
+        itemInCart.quantity--;
+        saveCart(cartArray);
+    }
+    updateCartTotal();
 }
 
 export function buildCartTotalRow(totalAmount) {
@@ -213,11 +253,9 @@ export function addItemToCart(itemId) {
         itemInCart = getObjectWithIdFromArray(itemId, cartArray);
 
     if (itemInCart) {
-        //increase quantity
         itemInCart.quantity++;
 
     } else {
-        //make first cart item
         cartArray.push({ id: itemId, quantity: 1 });
     }
 
