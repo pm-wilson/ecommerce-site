@@ -1,9 +1,12 @@
 import { getArrayOfFormData, saveArrayToLocalStorage, getInventory } from "./siteUtils.js";
 
-const adminButton = document.getElementById("admin-form");
+const adminForm = document.getElementById("admin-form");
 
-adminButton.addEventListener("submit", (e) => {
-    const objectOfFormData = getArrayOfFormData(e),
+adminForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(adminForm),
+        objectOfFormData = getArrayOfFormData(formData),
         localStorageArray = getInventory();
 
     localStorageArray.push(objectOfFormData);

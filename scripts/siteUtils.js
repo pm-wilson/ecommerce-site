@@ -205,6 +205,7 @@ function cartTotalAmount(cartItemArray, productItemArray) {
 export function buildInventoryElement(item) {
     const containerDiv = document.createElement("div"),
         h4Name = document.createElement("h4"),
+        spanCategory = document.createElement("span"),
         h5Price = document.createElement("h5"),
         pDescription = document.createElement("p"),
         imgPicture = document.createElement("img"),
@@ -216,6 +217,8 @@ export function buildInventoryElement(item) {
 
     h4Name.classList.add("car-inventory-name");
     h4Name.textContent = item.name;
+
+    spanCategory.textContent = "Category: " + item.category;
 
     h5Price.classList.add("car-inventory-price");
     h5Price.textContent = "$" + itemPrice.toFixed(2);
@@ -243,7 +246,7 @@ export function buildInventoryElement(item) {
     addButton.value = item.id;
     addButton.addEventListener("click", () => addItemToCart(item.id, quantityIncreaseDropdown.value));
 
-    containerDiv.append(h4Name, h5Price, pDescription, imgPicture, quantityIncreaseDropdown, addButton);
+    containerDiv.append(h4Name, spanCategory, h5Price, pDescription, imgPicture, quantityIncreaseDropdown, addButton);
 
     return containerDiv;
 }
@@ -372,14 +375,12 @@ function animateCartLogo() {
 }
 
 export function getArrayOfFormData(e) {
-    e.preventDefault();
-
-    const newId = e.target.id.value,
-        newName = e.target.name.value,
-        newImage = e.target.image.value,
-        newDescription = e.target.description.value,
-        newCategory = e.target.category.value,
-        newPrice = e.target.price.value,
+    const newId = e.get('id'),
+        newName = e.get('name'),
+        newImage = e.get('image'),
+        newDescription = e.get('description'),
+        newCategory = e.get('category'),
+        newPrice = e.get('price'),
         itemToAddToInventory = { id: newId, name: newName, image: newImage, description: newDescription, category: newCategory, price: newPrice };
 
     return itemToAddToInventory

@@ -4,6 +4,7 @@
   color: var(--color5);
   border: solid var(--color5) 2px;
   border-radius: 8px;
+  border-collapse: collapse;
 }
 
 td,
@@ -18,4 +19,12 @@ th {
 
 .quantity-up-count {
   width: 50px;
+}
+
+tr:nth-child(even) {
+  background-color: var(--color3);
+}
+
+tr:nth-child(odd) {
+  background-color: var(--color2);
 }
