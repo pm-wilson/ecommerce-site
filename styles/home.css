@@ -100,3 +100,7 @@ footer {
   animation-duration: 1s;
   animation-iteration-count: 1;
 }
+
+.current-page {
+  color: yellow;
+}

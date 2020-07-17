@@ -1,4 +1,4 @@
-import { cart } from "./constants.js";
+import { cart, inventory } from "./constants.js";
 import { productInventory } from "./product-inventory.js";
 
 export function getObjectWithIdFromArray(productId, arrayOfItems) {
@@ -209,7 +209,8 @@ export function buildInventoryElement(item) {
         pDescription = document.createElement("p"),
         imgPicture = document.createElement("img"),
         addButton = document.createElement("button"),
-        quantityIncreaseDropdown = document.createElement("select");
+        quantityIncreaseDropdown = document.createElement("select"),
+        itemPrice = Number(item.price);
 
     containerDiv.classList.add("car-inventory-item");
 
@@ -217,7 +218,7 @@ export function buildInventoryElement(item) {
     h4Name.textContent = item.name;
 
     h5Price.classList.add("car-inventory-price");
-    h5Price.textContent = "$" + item.price.toFixed(2);
+    h5Price.textContent = "$" + itemPrice.toFixed(2);
 
     pDescription.classList.add("car-inventory-description");
     pDescription.textContent = item.description;
@@ -274,7 +275,7 @@ function getCartTotalItems() {
 }
 
 function clearCart() {
-    localStorage.clear();
+    saveCart([]);
     buildCart();
 }
 
@@ -305,10 +306,11 @@ export function updateCartTotal() {
 }
 
 export function buildProducts() {
-    const listArea = document.querySelector("#product-list");
+    const listArea = document.querySelector("#product-list"),
+        inventory = getInventory();
 
-    for (var i = 0; i < productInventory.length; i++) {
-        const currentItem = productInventory[i],
+    for (var i = 0; i < inventory.length; i++) {
+        const currentItem = inventory[i],
             currentBuiltItem = buildInventoryElement(currentItem);
 
         listArea.append(currentBuiltItem);
@@ -317,13 +319,14 @@ export function buildProducts() {
 
 export function buildCart() {
     const cartArea = document.querySelector("#shopping-cart-area"),
+        inventory = getInventory(),
         cartData = getCart(),
-        totalAmount = cartTotalAmount(cartData, productInventory),
+        totalAmount = cartTotalAmount(cartData, inventory),
         checkoutButton = document.querySelector("#checkout-button");
 
     for (let i = 0; i < cartData.length; i++) {
         const currentCartItem = cartData[i],
-            currentCartRow = buildCartRow(currentCartItem.id, productInventory);
+            currentCartRow = buildCartRow(currentCartItem.id, inventory);
 
         cartArea.append(currentCartRow);
     }
@@ -337,11 +340,12 @@ export function buildCart() {
 
 export function checkoutCart() {
     const cart = getCart();
-    let cartText = "Checking out the ";
+    let cartText = "Checking out the ",
+        inventory = getInventory();
 
     for (var i = 0; i < cart.length; i++) {
         const currentCartItem = cart[i],
-            currentInventoryItem = getObjectWithIdFromArray(currentCartItem.id, productInventory);
+            currentInventoryItem = getObjectWithIdFromArray(currentCartItem.id, inventory);
 
         cartText += currentInventoryItem.name + " with Quantity (" + currentCartItem.quantity + ")";
         if (i !== cart.length - 1) {
@@ -365,4 +369,41 @@ function animateCartLogo() {
         setTimeout(() => cartLogo.classList.remove("animate-cart"), 1000);
 
     }
+}
+
+export function getArrayOfFormData(e) {
+    e.preventDefault();
+
+    const newId = e.target.id.value,
+        newName = e.target.name.value,
+        newImage = e.target.image.value,
+        newDescription = e.target.description.value,
+        newCategory = e.target.category.value,
+        newPrice = e.target.price.value,
+        itemToAddToInventory = { id: newId, name: newName, image: newImage, description: newDescription, category: newCategory, price: newPrice };
+
+    return itemToAddToInventory
+}
+
+export function getArrayOfInventoryFromLocalStorage() {
+    const stringifyInventory = localStorage.getItem(inventory),
+        inventoryArray = JSON.parse(stringifyInventory);
+
+    return inventoryArray;
+}
+
+export function saveArrayToLocalStorage(arrayToSave) {
+    const stringifiedArray = JSON.stringify(arrayToSave);
+
+    localStorage.setItem(inventory, stringifiedArray);
+}
+
+export function getInventory() {
+    const defaultInventory = productInventory,
+        storageInventory = getArrayOfInventoryFromLocalStorage();
+
+    if (storageInventory) {
+        return storageInventory;
+    }
+    return defaultInventory;
 }

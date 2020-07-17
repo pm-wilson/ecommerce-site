@@ -1,18 +1,12 @@
-import { inventory } from "./constants.js";
+import { getArrayOfFormData, saveArrayToLocalStorage, getInventory } from "./siteUtils.js";
 
 const adminButton = document.getElementById("admin-form");
 
 adminButton.addEventListener("submit", (e) => {
-    e.preventDefault();
+    const objectOfFormData = getArrayOfFormData(e),
+        localStorageArray = getInventory();
 
-    console.log("here")
-    //window.location = "../products.html";
+    localStorageArray.push(objectOfFormData);
+    saveArrayToLocalStorage(localStorageArray);
+    window.location = "./products.html";
 });
-
-function addInventoryToLocalStorage() {
-
-}
-//add current inventory into local storage
-
-
-console.log("admin page")
