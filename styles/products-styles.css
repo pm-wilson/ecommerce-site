@@ -5,26 +5,6 @@ main {
   margin-top: 120px;
 }
 
-#cart {
-  position: fixed;
-  top: 15px;
-  right: 25px;
-  margin: 25px;
-  width: 50px;
-  height: 50px;
-  background-image: url("cart-photos/cart-empty.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.cart-count {
-  color: var(--color2);
-  font-weight: bold;
-}
-
 .product-list-area {
   margin-left: 25px;
 }
@@ -59,4 +39,8 @@ main {
 .car-inventory-description {
   width: 200px;
   margin: 10px;
+}
+
+.quantity-increase-dropdown {
+  width: 40px;
 }
