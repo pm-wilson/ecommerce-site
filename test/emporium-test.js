@@ -1,13 +1,13 @@
 // IMPORT MODULES under test here:
 import { productInventory } from '../scripts/product-inventory.js';
-import { getObjectWithIdFromArray, calcLineItem, convertNumberToPrice, buildInventoryElement } from '../scripts/siteUtils.js';
+import { getObjectWithIdFromArray, buildCartRow, calcLineItem, convertNumberToPrice, buildInventoryElement } from '../scripts/siteUtils.js';
 
 const test = QUnit.test;
 
 test('tests if the correct element gets built given a object for product list', (expect) => {
     //Arrange
     // Set up your arguments and expectations
-    const expected = '<div class="car-inventory-item"><h4 class="car-inventory-name">Acura NSX</h4><h5 class="car-inventory-price">$500.00</h5><p class="car-inventory-description">Acuras most fancy sports car. Take this for a joy ride today.</p><img class="car-inventory-image" src="product-photos/Acura-NSX.jpeg"><button class="car-inventory-add-button" value="acura-nsx">Add</button></div>';
+    const expected = '<div class="car-inventory-item"><h4 class="car-inventory-name">Acura NSX</h4><span>Category: cars</span><h5 class="car-inventory-price">$500.00</h5><p class="car-inventory-description">Acuras most fancy sports car. Take this for a joy ride today.</p><img class="car-inventory-image" src="product-photos/Acura-NSX.jpeg"><select class="quantity-increase-dropdown" id="quantity-increase-acura-nsx" name="select"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select><button class="car-inventory-add-button" value="acura-nsx">Add</button></div>';
 
     const initial = {
         id: 'acura-nsx',
@@ -70,26 +70,6 @@ test('tests if the a number is correctly converted to price', (expect) => {
     expect.deepEqual(actual, expected);
     expect.equal(actual2, expected2);
 });
-
-/* test is unable to find price from another function within this function
-test('tests if the correct element gets built given a object for cart table', (expect) => {
-    //Arrange
-    // Set up your arguments and expectations
-    const expected = '<tr class="table-row-cart"><td class="table-row-name">Acura NSX</td><td class="table-row-quantity-down"><button id="cart-button-down-acura-nsx-45613862" class="cart-button-down">-</button></td><td class="table-row-quantity">5</td><td class="table-row-quantity-up"><button id="cart-button-up-acura-nsx-45613862" class="cart-button-up">+</button></td><td class="table-row-price">$500.00</td><td class="table-row-total">$2500.00</td><td class="table-row-button"><button id="cart-button-remove-acura-nsx-45613862" class="cart-button-remove">Remove</button></td></tr>';
-
-    const initial = { id: 'acura-nsx-45613862', quantity: 5 };
-
-    //Act
-    // Call the function you're testing and set the result to a const
-    const actual = buildCartRow(initial, productInventory),
-        actualString = actual.outerHTML;
-
-
-    //Expect
-    // Make assertions about what is expected versus the actual result
-    expect.deepEqual(actualString, expected);
-});
-*/
 
 test('tests if calcLineItem takes in a price and quantity and returns the product', (expect) => {
     //Arrange
