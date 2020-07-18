@@ -105,9 +105,7 @@ function increaseCartForAmount(cartObjectId) {
     const amountToIncreaseArea = document.querySelector('#quantity-up-count-' + cartObjectId),
         amountToIncrease = Number(amountToIncreaseArea.value);
 
-    for (var i = 0; i < amountToIncrease; i++) {
-        addItemToCart(cartObjectId);
-    }
+    addItemToCart(cartObjectId, amountToIncrease);
     location.reload();
 }
 

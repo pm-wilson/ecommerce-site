@@ -42,13 +42,7 @@ a {
   text-decoration: underline;
   color: var(--color3);
   cursor: pointer;
-  color: blue;
-}
-
-a {
-  text-decoration: underline;
-  color: blue;
-  cursor: pointer;
+  color: var(--color2);
 }
 
 footer {
