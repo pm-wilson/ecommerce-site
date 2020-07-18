@@ -1,4 +1,4 @@
-import { updateCartTotal, buildProducts } from "./siteUtils.js";
+import { updateCartTotal, buildProducts } from './siteUtils.js';
 
 buildProducts();
 updateCartTotal();

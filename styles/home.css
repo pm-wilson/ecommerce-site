@@ -45,7 +45,9 @@ a {
   color: blue;
 }
 
-button {
+a {
+  text-decoration: underline;
+  color: blue;
   cursor: pointer;
 }
 
