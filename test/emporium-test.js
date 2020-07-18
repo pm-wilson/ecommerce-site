@@ -1,6 +1,6 @@
 // IMPORT MODULES under test here:
 import { productInventory } from '../scripts/product-inventory.js';
-import { getObjectWithIdFromArray, buildCartRow, calcLineItem, convertNumberToPrice, buildInventoryElement } from '../scripts/siteUtils.js';
+import { getObjectWithIdFromArray, calcLineItem, convertNumberToPrice, buildInventoryElement } from '../scripts/siteUtils.js';
 
 const test = QUnit.test;
 
